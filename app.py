@@ -1,10 +1,5 @@
 # TEAM'S CODE
-
-import kagglehub
 import os
-
-path = kagglehub.dataset_download("ealaxi/paysim1")
-print("Dataset Path:", path)
 
 import os
 from pyspark.sql import SparkSession
@@ -17,16 +12,11 @@ spark = SparkSession.builder \
     .config("spark.driver.host", "127.0.0.1") \
     .getOrCreate()
 
-file = [f for f in os.listdir(path) if f.endswith(".csv")][0]
-file_path = os.path.join(path, file)
-
-df = spark.read.csv(file_path, header=True, inferSchema=True)
-
-df.show(5)
-df.printSchema()
-
-print("Number of Rows:", df.count())
-print("Number of Columns:", len(df.columns))
+df = spark.read.csv(
+    "PS_20174392719_1491204439457_log.csv",
+    header=True,
+    inferSchema=True
+)
 
 from pyspark.sql import functions as F
 
